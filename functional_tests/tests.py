@@ -1,9 +1,9 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver 
 from selenium.webdriver.common.keys import Keys
 import time
-import unittest 
 
-class NewVisitorTest(unittest.TestCase): 
+class NewVisitorTest(LiveServerTestCase): 
     
     # Arrange
     def setUp(self): 
@@ -23,7 +23,7 @@ class NewVisitorTest(unittest.TestCase):
         # Act
         # Edith has heard about a cool new online to-do app. She goes 
         # to check out its homepage 
-        self.browser.get('http://localhost:8000') 
+        self.browser.get(self.live_server_url) 
 
         # Assert
         # She notices the page title and header mention to-do lists 
@@ -45,7 +45,7 @@ class NewVisitorTest(unittest.TestCase):
         # When she hits enter, the page updates, and now the page lists 
         # "1: Buy peacock feathers" as an item in a to-do list table 
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(1) 
+        time.sleep(1)
         
         table = self.browser.find_element_by_id('id_list_table') 
         rows = table.find_elements_by_tag_name('tr') 
@@ -70,7 +70,3 @@ class NewVisitorTest(unittest.TestCase):
         
         # She visits that URL - her to-do list is still there.self.fail('Finish the test!') 
         
-
-
-if __name__ == '__main__': 
-    unittest.main(warnings='ignore')
